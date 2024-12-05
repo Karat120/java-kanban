@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class Task {
+public class Task { //задача
     private int taskId; //Индетификатор задач уникальное для всех типов задач
     private String taskName;
     private String taskDescriptionl;
