@@ -1,5 +1,5 @@
 public enum Statuc { //статус задачи
     NEW,
-    IN_PROGTESS,
+    IN_PROGRESS,
     DONE
 }

@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public class Epic extends Task{
     private ArrayList<Integer> listSubTaskId = new ArrayList<>();
 
-    public Epic(String taskName, String taskDescriptionl, Statuc taskStatus) {
-        super(taskName, taskDescriptionl, taskStatus);
+    public Epic(String taskName, String taskDescriptionl) {
+        super(taskName, taskDescriptionl, Statuc.NEW);
     }
 
     public void addSubTaskId(Subtask subtask) {
@@ -15,28 +15,33 @@ public class Epic extends Task{
         listSubTaskId.addAll(newSubTasksIdList); //Добавляем id новых подзадач к старым
     }
 
-    public Integer getSubTaskId(int subTaskId) {
+    public Integer getSubTaskId(int subTaskId) {св
         if (listSubTaskId.contains(subTaskId)) {
-            //  Если нужно вернуть именно объект Integer из списка, а не просто subTaskId:
+            //  Если нужно вернуть именно объект Integer из списка, а не просто subTaskId
             return listSubTaskId.stream().filter(id -> id == subTaskId).findFirst().orElse(null);
         }
-        return null; // Или выбросить исключение
+        return null;
     }
     public ArrayList<Integer> getListSubTaskId() {
         ArrayList<Integer> copyList = new ArrayList<>(listSubTaskId);
         return copyList;
     }
 
-    public void removeSubTask(Integer id) {
+    public void removeSubTaskById(Integer id) {
         listSubTaskId.remove(id);
     }
 
-    public void claerListSubTask() {
+    public void clearListSubTask() {
         listSubTaskId.clear();
     }
 
-
-
-
-
+    @Override
+    public String toString() {
+        return "Epic{" +
+                "id=" + getTaskId() +
+                ", name=" + getTaskName() + " , taskDescriptionl='" + super.getTaskDescriptionl() +
+                ", subTasksIdList=" + listSubTaskId +
+                ", status=" + getTaskStatus() +
+                '}';
+    }
 }

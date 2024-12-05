@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class Task { //задача
+public class Task {
     private int taskId; //Индетификатор задач уникальное для всех типов задач
     private String taskName;
     private String taskDescriptionl;
@@ -55,5 +55,15 @@ public class Task { //задача
 
     public Statuc getTaskStatus() {
         return taskStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskId=" + taskId +
+                ", taskName='" + taskName + '\'' +
+                ", taskDescriptionl='" + taskDescriptionl + '\'' +
+                ", taskStatus=" + taskStatus +
+                '}';
     }
 }
