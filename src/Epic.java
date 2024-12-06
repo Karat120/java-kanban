@@ -15,7 +15,7 @@ public class Epic extends Task{
         listSubTaskId.addAll(newSubTasksIdList); //Добавляем id новых подзадач к старым
     }
 
-    public Integer getSubTaskId(int subTaskId) {св
+    public Integer getSubTaskId(int subTaskId) {
         if (listSubTaskId.contains(subTaskId)) {
             //  Если нужно вернуть именно объект Integer из списка, а не просто subTaskId
             return listSubTaskId.stream().filter(id -> id == subTaskId).findFirst().orElse(null);
