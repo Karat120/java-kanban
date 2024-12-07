@@ -5,7 +5,7 @@ public class TaskManager { // блок управления
     private HashMap<Integer, Task> taskHashMap = new HashMap<>();
     private  HashMap<Integer, Epic> epicHashMap = new HashMap<>();
     private HashMap<Integer, Subtask> subtaskHashMap = new HashMap<>();
-    private static int id = 1;
+    private int id = 1;
 
     public void addTask(Task task) {
         task.setTaskId(nextId());
@@ -129,7 +129,7 @@ public class TaskManager { // блок управления
         }
     }
 
-    private static int nextId() {
+    private int nextId() {
         return  id++;
     }
 
