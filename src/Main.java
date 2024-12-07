@@ -1,5 +1,4 @@
 public class Main {
-
     public static void main(String[] args) {
         TaskManager taskManager = new TaskManager();
         Task taskOne = new Task("Учёба", "Выполнить задания в тренажере", Statuc.NEW);
@@ -23,8 +22,6 @@ public class Main {
 
         Epic epicWithTwo = new Epic("Сходить в кино с девушкой", "Подготовиться");
         Epic epicWithOne = new Epic("Уборка", "Уборка квартиры");
-
-
 
         taskManager.addEpic(epicWithTwo);
         taskManager.addEpic(epicWithOne);
@@ -58,7 +55,6 @@ public class Main {
         System.out.println("Весь список подзадач" + taskManager.getAllSubtask());
         System.out.println("Весь список эпиков " + taskManager.getAllEpic());
 
-
         //удаление subtask and epic
         taskManager.deleteSubTaskById(subtaskFirst.getTaskId());
         System.out.println("\nСписок подзадач (удалена subtask name 'купить цветы') " + taskManager.getAllSubtask());
@@ -75,9 +71,5 @@ public class Main {
         System.out.println("Subtask после удаления вызов метода getAllSubtask " + taskManager.getAllSubtask());
         System.out.println("Изменяется статус epic после удаления subtask, вывод эпиков " + taskManager.getAllEpic());
 
-
-
     }
-
-
 }

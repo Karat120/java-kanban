@@ -17,12 +17,12 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return taskId == task.taskId && Objects.equals(taskName, task.taskName) && Objects.equals(taskDescriptionl, task.taskDescriptionl) && taskStatus == task.taskStatus;
+        return taskId == task.taskId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(taskId, taskName);
+        return Objects.hash(taskId);
     }
 
     public void setTaskId(int taskId) {
