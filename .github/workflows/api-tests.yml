@@ -1,4 +1,7 @@
-name: Java Tests
+- name: Run tests
+  run: |
+    javac -cp src src/TestTask.java
+    java -cp src org.junit.runner.JUnitCore TestTask
 
 on:
   pull_request:
