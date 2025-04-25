@@ -1,4 +1,5 @@
 import java.io.PrintStream;
+import java.util.List;
 
 public class Main {
     public Main() {
@@ -62,5 +63,7 @@ public class Main {
         System.out.println("Subtask после удаления вызов метода getAllSubtask " + String.valueOf(taskManager.getAllSubtask()));
         System.out.println("Изменяется статус epic после удаления subtask, вывод эпиков " + String.valueOf(taskManager.getAllEpic()));
         System.out.println("История задач: " + String.valueOf(taskManager.getHistory()));
+
+
     }
 }

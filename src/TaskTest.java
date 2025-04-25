@@ -1,13 +1,24 @@
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TaskTest {
     public TaskTest() {
     }
+    private TaskManager taskManager;
+    private HistoryManager historyManager;
 
+    @BeforeEach
+    void Original() {
+        taskManager = new InMemoryTaskManager();
+        historyManager = new InMemoryHistoryManager();
+    }
     @Test
     void testTasksEqualIfIdsEqual() {
         Task task1 = new Task("Task1", "Description1", Statuc.NEW);
@@ -53,7 +64,7 @@ public class TaskTest {
         Task task = new Task("Task", "Description", Statuc.NEW);
         taskManager.addTask(task);
         Task retrievedTask = taskManager.getTaskId(task.getTaskId());
-        Assertions.assertEquals(task, retrievedTask, "Task should be retrievable by its ID");
+        assertEquals(task, retrievedTask, "Task should be retrievable by its ID");
     }
 
     @Test
@@ -71,7 +82,7 @@ public class TaskTest {
         task.setTaskStatus(Statuc.IN_PROGRESS);
         taskManager.addTask(task);
         Task retrievedTask = taskManager.getTaskId(task.getTaskId());
-        Assertions.assertEquals(Statuc.IN_PROGRESS, retrievedTask.getTaskStatus(), "Task status should remain unchanged after addition");
+        assertEquals(Statuc.IN_PROGRESS, retrievedTask.getTaskStatus(), "Task status should remain unchanged after addition");
     }
 
     @Test
@@ -80,8 +91,8 @@ public class TaskTest {
         Task task = new Task("Task", "Description", Statuc.NEW);
         task.setTaskId(1);
         historyManager.add(task);
-        Assertions.assertEquals(1, historyManager.getHistory().size());
-        Assertions.assertEquals(task, historyManager.getHistory().get(0));
+        assertEquals(1, historyManager.getHistory().size());
+        assertEquals(task, historyManager.getHistory().get(0));
     }
 
     @Test
@@ -91,7 +102,7 @@ public class TaskTest {
         taskManager.addTask(task);
         String expected = "[Task{taskId=1, taskName='Приготовить кофе', taskDescriptionl='добавить сливки', taskStatus=NEW}]";
         String actually = taskManager.getAllTasks().toString();
-        Assertions.assertEquals(expected, actually);
+        assertEquals(expected, actually);
     }
 
     @Test
@@ -114,7 +125,7 @@ public class TaskTest {
             Assertions.assertTrue(taskIds.add(task.getTaskId()), "ID задачи должен быть уникальным: " + task.getTaskId());
         }
 
-        Assertions.assertEquals(taskManager.getAllTasks().size(), 4, "Количество задач должно быть 4");
+        assertEquals(taskManager.getAllTasks().size(), 4, "Количество задач должно быть 4");
     }
 
     @Test
@@ -124,7 +135,7 @@ public class TaskTest {
         taskManager.addTask(task);
         taskManager.deleteTaskById(task.getTaskId());
         Task fetchedTask = taskManager.getTaskId(task.getTaskId());
-        Assertions.assertNull(fetchedTask, "Задача не была удалена");
+        assertNull(fetchedTask, "Задача не была удалена");
     }
 
     @Test
@@ -137,9 +148,9 @@ public class TaskTest {
         task.setTaskStatus(Statuc.DONE);
         taskManager.updateTask(task);
         Task updatedTask = taskManager.getTaskId(task.getTaskId());
-        Assertions.assertEquals("Updated Task", updatedTask.getTaskName(), "Название задачи не обновилось");
-        Assertions.assertEquals("Updated Description", updatedTask.getTaskDescriptionl(), "Описание задачи не обновилось");
-        Assertions.assertEquals(Statuc.DONE, updatedTask.getTaskStatus(), "Статус задачи не обновился");
+        assertEquals("Updated Task", updatedTask.getTaskName(), "Название задачи не обновилось");
+        assertEquals("Updated Description", updatedTask.getTaskDescriptionl(), "Описание задачи не обновилось");
+        assertEquals(Statuc.DONE, updatedTask.getTaskStatus(), "Статус задачи не обновился");
     }
 
     @Test
@@ -153,5 +164,79 @@ public class TaskTest {
         Assertions.assertTrue(taskManager.getAllTasks().isEmpty(), "Не все задачи были удалены");
     }
 
+    // Новые тесты для HistoryManager
+    @Test
+    void testHistoryManagerShouldNotContainDuplicates() {
+        Task task = new Task("Task 1", "Description1", Statuc.NEW);
+        historyManager.add(task);
+        historyManager.add(task);
+        assertEquals(1, historyManager.getHistory().size(), "История содержит дубликаты");
+    }
 
+@Test
+void testHistoryShouldPreserveTaskOrder() {
+    Task task1 = new Task("First", "Desc", Statuc.NEW);
+    task1.setTaskId(1);
+
+    Task task2 = new Task("Second", "Desc", Statuc.NEW);
+    task2.setTaskId(2);
+
+    historyManager.add(task1);
+    historyManager.add(task2);
+
+    List<Task> history = historyManager.getHistory();
+    assertEquals(2, history.size());
+    assertEquals(1, history.get(0).getTaskId());  // Проверяем по ID
+    assertEquals(2, history.get(1).getTaskId());
 }
+    // Тесты целостности данных
+    @Test
+    void testSubtaskShouldNotExistWithoutEpic() {
+        Epic epic = new Epic("Task 1", "Epic 1");
+        Subtask subtask = new Subtask(epic, "Subtask 1", "d", Statuc.NEW);
+        taskManager.addEpic(epic);
+        taskManager.addSubTask(subtask);
+
+        taskManager.deleteEpicTaskById(epic.getTaskId());
+        assertNull(taskManager.getSubTaskById(subtask.getTaskId()), "Подзадача осталась после удаления эпика");
+    }
+
+    @Test
+    void testTaskFieldsModificationShouldBeConsistent() {
+        Task task = new Task("Task 1", "Description1", Statuc.NEW);
+        taskManager.addTask(task);
+        task.setTaskName("modified");
+        assertEquals("modified", taskManager.getTaskId(1).getTaskName(),
+                "Изменение имени задачи не отразилось в менеджере");
+    }
+
+    // Тесты для сеттеров
+    @Test
+    void testChangingTaskNameShouldUpdateInManager() {
+        Task task1 = new Task("Task 1", "Description1", Statuc.NEW);
+        taskManager.addTask(task1);
+        task1.setTaskName("Updated Name");
+        assertEquals("Updated Name", taskManager.getTaskId(1).getTaskName());
+    }
+
+    @Test
+    void testShouldPreventDuplicateIds() {
+        Task firstTask = new Task("First", "Desc", Statuc.NEW);
+        firstTask.setTaskId(1);
+        taskManager.addTask(firstTask);
+
+        Task duplicateTask = new Task("Duplicate", "Desc", Statuc.NEW);
+        duplicateTask.setTaskId(1);
+
+        // Проверяем, что вторая задача не заменила первую
+        taskManager.addTask(duplicateTask);
+        Task storedTask = taskManager.getTaskId(1);
+
+        assertNotEquals("Duplicate", storedTask.getTaskName(),
+                "Дубликат не должен заменять оригинальную задачу");
+        assertEquals("First", storedTask.getTaskName());
+    }
+}
+
+
+
