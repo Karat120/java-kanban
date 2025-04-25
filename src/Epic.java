@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Epic extends Task{
+public class Epic extends Task {
     private ArrayList<Integer> listSubTaskId = new ArrayList<>();
 
     public Epic(String taskName, String taskDescriptionl) {
@@ -22,6 +22,7 @@ public class Epic extends Task{
         }
         return null;
     }
+
     public ArrayList<Integer> getListSubTaskId() {
         ArrayList<Integer> copyList = new ArrayList<>(listSubTaskId);
         return copyList;
