@@ -2,6 +2,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TaskTest {
     public TaskTest() {
     }
+
     private TaskManager taskManager;
     private HistoryManager historyManager;
 
@@ -19,6 +21,7 @@ public class TaskTest {
         taskManager = new InMemoryTaskManager();
         historyManager = new InMemoryHistoryManager();
     }
+
     @Test
     void testTasksEqualIfIdsEqual() {
         Task task1 = new Task("Task1", "Description1", Statuc.NEW);
@@ -120,8 +123,8 @@ public class TaskTest {
         Set<Integer> taskIds = new HashSet();
         Iterator var7 = taskManager.getAllTasks().iterator();
 
-        while(var7.hasNext()) {
-            Task task = (Task)var7.next();
+        while (var7.hasNext()) {
+            Task task = (Task) var7.next();
             Assertions.assertTrue(taskIds.add(task.getTaskId()), "ID задачи должен быть уникальным: " + task.getTaskId());
         }
 
@@ -173,22 +176,23 @@ public class TaskTest {
         assertEquals(1, historyManager.getHistory().size(), "История содержит дубликаты");
     }
 
-@Test
-void testHistoryShouldPreserveTaskOrder() {
-    Task task1 = new Task("First", "Desc", Statuc.NEW);
-    task1.setTaskId(1);
+    @Test
+    void testHistoryShouldPreserveTaskOrder() {
+        Task task1 = new Task("First", "Desc", Statuc.NEW);
+        task1.setTaskId(1);
 
-    Task task2 = new Task("Second", "Desc", Statuc.NEW);
-    task2.setTaskId(2);
+        Task task2 = new Task("Second", "Desc", Statuc.NEW);
+        task2.setTaskId(2);
 
-    historyManager.add(task1);
-    historyManager.add(task2);
+        historyManager.add(task1);
+        historyManager.add(task2);
 
-    List<Task> history = historyManager.getHistory();
-    assertEquals(2, history.size());
-    assertEquals(1, history.get(0).getTaskId());  // Проверяем по ID
-    assertEquals(2, history.get(1).getTaskId());
-}
+        List<Task> history = historyManager.getHistory();
+        assertEquals(2, history.size());
+        assertEquals(1, history.get(0).getTaskId());  // Проверяем по ID
+        assertEquals(2, history.get(1).getTaskId());
+    }
+
     // Тесты целостности данных
     @Test
     void testSubtaskShouldNotExistWithoutEpic() {

@@ -15,9 +15,11 @@ public interface TaskManager {
     public ArrayList<Subtask> getListSubTasksByEpicId(ArrayList<Integer> subTaskId);
 
     public Subtask getSubTaskById(int id);
+
     public List<Task> getHistory();
 
     public ArrayList<Task> getAllTasks();
+
     public ArrayList<Epic> getAllEpic();
 
     public ArrayList<Subtask> getAllSubtask();

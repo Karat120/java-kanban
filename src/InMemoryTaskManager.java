@@ -33,19 +33,19 @@ public class InMemoryTaskManager implements TaskManager {
         if (epic != null) {
             epic.addSubTaskId(subtask);
             this.subtaskHashMap.put(subtask.getTaskId(), subtask);
-            this.updateEpicStatus((Epic)this.epicHashMap.get(subtask.getEpicId()));
+            this.updateEpicStatus((Epic) this.epicHashMap.get(subtask.getEpicId()));
         }
 
     }
 
     public Task getTaskId(int id) {
-        Task task = (Task)this.taskHashMap.get(id);
+        Task task = (Task) this.taskHashMap.get(id);
         this.histryManager.add(task);
         return task;
     }
 
     public Epic getEpicById(int id) {
-        Epic epic = (Epic)this.epicHashMap.get(id);
+        Epic epic = (Epic) this.epicHashMap.get(id);
         this.histryManager.add(epic);
         return epic;
     }
@@ -54,16 +54,16 @@ public class InMemoryTaskManager implements TaskManager {
         ArrayList<Subtask> subtaskList = new ArrayList();
         Iterator var3 = subTaskId.iterator();
 
-        while(var3.hasNext()) {
-            Integer id = (Integer)var3.next();
-            subtaskList.add((Subtask)this.subtaskHashMap.get(id));
+        while (var3.hasNext()) {
+            Integer id = (Integer) var3.next();
+            subtaskList.add((Subtask) this.subtaskHashMap.get(id));
         }
 
         return subtaskList;
     }
 
     public Subtask getSubTaskById(int id) {
-        Subtask subtask = (Subtask)this.subtaskHashMap.get(id);
+        Subtask subtask = (Subtask) this.subtaskHashMap.get(id);
         this.histryManager.add(subtask);
         return subtask;
     }
@@ -72,8 +72,8 @@ public class InMemoryTaskManager implements TaskManager {
         ArrayList<Task> allTasks = new ArrayList();
         Iterator var2 = this.taskHashMap.values().iterator();
 
-        while(var2.hasNext()) {
-            Task task = (Task)var2.next();
+        while (var2.hasNext()) {
+            Task task = (Task) var2.next();
             allTasks.add(task);
         }
 
@@ -84,8 +84,8 @@ public class InMemoryTaskManager implements TaskManager {
         ArrayList<Epic> epics = new ArrayList();
         Iterator var2 = this.epicHashMap.values().iterator();
 
-        while(var2.hasNext()) {
-            Epic epic = (Epic)var2.next();
+        while (var2.hasNext()) {
+            Epic epic = (Epic) var2.next();
             epics.add(epic);
         }
 
@@ -96,8 +96,8 @@ public class InMemoryTaskManager implements TaskManager {
         ArrayList<Subtask> subtasks = new ArrayList();
         Iterator var2 = this.subtaskHashMap.values().iterator();
 
-        while(var2.hasNext()) {
-            Subtask subtask = (Subtask)var2.next();
+        while (var2.hasNext()) {
+            Subtask subtask = (Subtask) var2.next();
             subtasks.add(subtask);
         }
 
@@ -124,7 +124,7 @@ public class InMemoryTaskManager implements TaskManager {
             this.subtaskHashMap.replace(subtask.getTaskId(), subtask);
         }
 
-        this.updateEpicStatus((Epic)this.epicHashMap.get(subtask.getEpicId()));
+        this.updateEpicStatus((Epic) this.epicHashMap.get(subtask.getEpicId()));
     }
 
     public void deleteTaskById(int id) {
@@ -132,14 +132,14 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     public void deleteEpicTaskById(int id) {
-        Epic epic = (Epic)this.epicHashMap.get(id);
+        Epic epic = (Epic) this.epicHashMap.get(id);
         epic.removeSubTaskById(id);
         this.subtaskHashMap.remove(id);
         this.updateEpicStatus(epic);
     }
 
     public void deleteSubTaskById(int id) {
-        Epic epic = (Epic)this.epicHashMap.get(((Subtask)this.subtaskHashMap.get(id)).getEpicId());
+        Epic epic = (Epic) this.epicHashMap.get(((Subtask) this.subtaskHashMap.get(id)).getEpicId());
         epic.removeSubTaskById(id);
         this.subtaskHashMap.remove(id);
         this.updateEpicStatus(epic);
@@ -159,8 +159,8 @@ public class InMemoryTaskManager implements TaskManager {
         this.subtaskHashMap.clear();
         Iterator var1 = this.epicHashMap.values().iterator();
 
-        while(var1.hasNext()) {
-            Epic epic = (Epic)var1.next();
+        while (var1.hasNext()) {
+            Epic epic = (Epic) var1.next();
             this.updateEpicStatus(epic);
             epic.clearListSubTask();
         }
@@ -180,9 +180,9 @@ public class InMemoryTaskManager implements TaskManager {
                 ArrayList<Subtask> subtasks = new ArrayList();
                 Iterator var4 = subTaskIds.iterator();
 
-                while(var4.hasNext()) {
-                    Integer subtaskId = (Integer)var4.next();
-                    Subtask subtask = (Subtask)this.subtaskHashMap.get(subtaskId);
+                while (var4.hasNext()) {
+                    Integer subtaskId = (Integer) var4.next();
+                    Subtask subtask = (Subtask) this.subtaskHashMap.get(subtaskId);
                     if (subtask != null) {
                         subtasks.add(subtask);
                     }
@@ -195,8 +195,8 @@ public class InMemoryTaskManager implements TaskManager {
                     boolean allDone = true;
                     Iterator var10 = subtasks.iterator();
 
-                    while(var10.hasNext()) {
-                        Subtask subtask = (Subtask)var10.next();
+                    while (var10.hasNext()) {
+                        Subtask subtask = (Subtask) var10.next();
                         if (subtask.getTaskStatus() != Statuc.NEW) {
                             hasInProgress = false;
                         }
@@ -222,8 +222,8 @@ public class InMemoryTaskManager implements TaskManager {
     public void clearEpicSubTask() {
         Iterator var1 = this.epicHashMap.values().iterator();
 
-        while(var1.hasNext()) {
-            Epic epic = (Epic)var1.next();
+        while (var1.hasNext()) {
+            Epic epic = (Epic) var1.next();
             epic.clearListSubTask();
         }
 
