@@ -1,5 +1,4 @@
 import java.io.PrintStream;
-import java.util.List;
 
 public class Main {
     public Main() {
