@@ -4,17 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    // Узел двусвязного списка
-    private static class Node<T> {
-        T data;
-        Node<T> last;
-        Node<T> next;
-
-        Node(T data) {
-            this.data = data;
-        }
-    }
-
     private final Map<Integer, Node<Task>> nodeMap = new HashMap<>();
     private Node<Task> head;
     private Node<Task> tail;
@@ -80,4 +69,16 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
         return tasks;
     }
+    // Узел двусвязного списка
+    private static class Node<T> {
+        T data;
+        Node<T> last;
+        Node<T> next;
+
+        Node(T data) {
+            this.data = data;
+        }
+    }
 }
+
+
