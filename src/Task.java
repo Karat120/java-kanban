@@ -6,7 +6,7 @@ public class Task {
     private String taskDescriptionl;
     private Statuc taskStatus;
 
-    public Task(String taskName, String taskDescriptionl, Statuc taskStatus) {
+    public Task( String taskName, String taskDescriptionl, Statuc taskStatus) {
         this.taskName = taskName;
         this.taskDescriptionl = taskDescriptionl;
         this.taskStatus = taskStatus;
