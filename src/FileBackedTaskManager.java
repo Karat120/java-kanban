@@ -13,7 +13,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         this.file = file;
     }
 
-    public static FileBackedTaskManager loadFromFile(File file) {
+  public static FileBackedTaskManager loadFromFile(File file) {
         FileBackedTaskManager manager = new FileBackedTaskManager(file);
         Map<Integer, Epic> epicById = new HashMap<>();
 
