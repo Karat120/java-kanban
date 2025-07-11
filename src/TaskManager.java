@@ -12,17 +12,17 @@ public interface TaskManager {
 
     public Epic getEpicById(int id);
 
-    public ArrayList<Subtask> getListSubTasksByEpicId(ArrayList<Integer> subTaskId);
+    public List<Subtask> getListSubTasksByEpicId(List<Integer> subTaskId);
 
     public Subtask getSubTaskById(int id);
 
     public List<Task> getHistory();
 
-    public ArrayList<Task> getAllTasks();
+    public List<Task> getAllTasks();
 
-    public ArrayList<Epic> getAllEpic();
+    public List<Epic> getAllEpic();
 
-    public ArrayList<Subtask> getAllSubtask();
+    public List<Subtask> getAllSubtask();
 
     public void updateTask(Task task);
 
@@ -46,5 +46,10 @@ public interface TaskManager {
 
     public void clearEpicSubTask();
 
+    public List<Task> getPrioritizedTasks();
+
+    boolean isTasksIntersect(Task task1, Task task2);
+
+    boolean hasTimeIntersections(Task newTask);
 
 }
