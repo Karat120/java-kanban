@@ -9,6 +9,11 @@ public class InMemoryTaskManager implements TaskManager {
     private HashMap<Integer, Subtask> subtaskHashMap = new HashMap();
     private int id = 1;
 
+    private final TreeSet<Task> prioritizedTasks = new TreeSet<>(
+            Comparator.comparing(Task::getStartTime,
+                    Comparator.nullsLast(Comparator.naturalOrder()))
+    );
+
     public InMemoryTaskManager() {
     }
 
@@ -260,11 +265,5 @@ public class InMemoryTaskManager implements TaskManager {
             prioritizedTasks.add(task);
         }
     }
-
-    private final TreeSet<Task> prioritizedTasks = new TreeSet<>(
-            Comparator.comparing(Task::getStartTime,
-                    Comparator.nullsLast(Comparator.naturalOrder()))
-    );
-
 
 }
